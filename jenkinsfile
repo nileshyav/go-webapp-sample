@@ -1,0 +1,64 @@
+// pipeline{
+//     agent any
+//     tools{
+//         go 'go'
+//     }
+//     environment{
+//         GO111MODULE='on'
+//     }
+//     stages{
+//         stage('test'){
+//             steps {
+//                   git 'https://github.com/adminturneddevops/go-webapp-sample.git'
+                
+//             }
+            
+//         }
+//         stage("Build"){
+//             steps {
+//                 script {
+//                     app = docker.build("adminturneddevops/go-webapp-sample")
+//                 }
+//             }
+//         }
+//     }
+// }}}
+
+
+
+
+pipeline{
+    agent any
+    tools{
+        go 'go'
+    }
+    environment{
+        GO111MODULE='on'
+    }
+    stages{
+        stage('test'){
+            steps {
+                  git 'https://github.com/nileshyav/go-webapp-sample.git'
+                  
+                
+            }
+            
+        }
+        stage("Build"){
+            steps {
+                git 'https://github.com/nileshyav/go-webapp-sample.git'
+                sh 'go build .'
+                
+
+                }
+            }
+        stage("Run"){
+            steps {
+                sh 'cd /var/lib/jenkins/workspace/test && ls'
+                sh 'cd /var/lib/jenkins/workspace/test && go-webapp-sample &'
+                
+                
+            }
+        }
+        }
+    }
